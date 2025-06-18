@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>assets/house.png</file>
+        <file>assets/brush.png</file>
+        <file>assets/code-xml.png</file>
+        <file>assets/gamepad-2.png</file>
+        <file>assets/notebook.png</file>
+        <file>assets/panel-left-close.png</file>
+        <file>assets/circle-user.png</file>
+        <file>assets/settings.png</file>
+        <file>assets/swords.png</file>
+    </qresource>
+</RCC>
