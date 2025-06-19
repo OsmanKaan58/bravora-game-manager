@@ -11,7 +11,7 @@ HomePage::HomePage(QWidget *parent)
 
     // Layout with a label
     QVBoxLayout *layout = new QVBoxLayout(this);
-    QLabel *label = new QLabel("Home Page");
+    QLabel *label = new QLabel("New Home Page");
     QFont font;
     font.setPointSize(20);
     label->setFont(font);

@@ -3,9 +3,11 @@
 
 
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent, TaskService* taskServicePtr, GoalService* goalServicePtr)
+    : QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    taskServicePtr(taskServicePtr),
+    goalServicePtr(goalServicePtr)
 {
     ui->setupUi(this);
 

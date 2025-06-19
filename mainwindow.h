@@ -2,11 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "goalservice.h"
 #include "programmingpage.h"
 #include "gameartpage.h"
 #include "homepage.h"
 #include "backendpage.h"
 #include "productmanagementpage.h"
+#include "taskservice.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,7 +21,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, TaskService* taskServicePtr = nullptr, GoalService* goalServicePtr = nullptr);
     ~MainWindow();
 
 private slots:
@@ -42,5 +44,7 @@ private:
     ProgrammingPage* progPage;
     BackendPage* backendPage;
     ProductManagementPage* productPage;
+    TaskService* taskServicePtr;
+    GoalService* goalServicePtr;
 };
 #endif // MAINWINDOW_H

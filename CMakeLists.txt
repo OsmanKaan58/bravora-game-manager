@@ -9,56 +9,46 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Qt6Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
 
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+set(SOURCES
+    main.cpp
+    mainwindow.cpp mainwindow.h mainwindow.ui
+    programmingpage.cpp programmingpage.h programmingpage.ui
+    gameartpage.cpp gameartpage.h gameartpage.ui
+    backendpage.cpp backendpage.h backendpage.ui
+    productmanagementpage.cpp productmanagementpage.h productmanagementpage.ui
+    homepage.cpp homepage.h homepage.ui
+    task.cpp task.h
+    tasktype.h
+    taskcategory.h
+    goal.cpp goal.h
+    goalpriority.h
+    goalservice.cpp goalservice.h
+    funresources.qrc
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(QT_VERSION_MAJOR GREATER_EQUAL 6)
     qt_add_executable(FunGameManager
         MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        funresources.qrc
-        programmingpage.h programmingpage.cpp programmingpage.ui
-        gameartpage.h gameartpage.cpp gameartpage.ui
-        backendpage.h backendpage.cpp backendpage.ui
-        productmanagementpage.h productmanagementpage.cpp productmanagementpage.ui
-        homepage.h homepage.cpp homepage.ui
-        task.h task.cpp
+        ${SOURCES}
+        taskservice.h taskservice.cpp
     )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET FunGameManager APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
-    if(ANDROID)
-        add_library(FunGameManager SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(FunGameManager
-            ${PROJECT_SOURCES}
-        )
-    endif()
+    add_executable(FunGameManager ${SOURCES})
 endif()
 
-target_link_libraries(FunGameManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(FunGameManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Sql)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
+# macOS and Windows packaging options
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.FunGameManager)
+    set_target_properties(FunGameManager PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER com.example.FunGameManager
+    )
 endif()
+
 set_target_properties(FunGameManager PROPERTIES
-    ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
