@@ -34,6 +34,8 @@ if(QT_VERSION_MAJOR GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${SOURCES}
         taskservice.h taskservice.cpp
+        asset.h asset.cpp
+        assetservice.h assetservice.cpp
     )
 else()
     add_executable(FunGameManager ${SOURCES})
